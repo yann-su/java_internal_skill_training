@@ -12,12 +12,12 @@ class LazySingleton {
 
     private static volatile LazySingleton instance = null;
 
-    private LazySingleton(){
+    private LazySingleton() {
         //避免类在外部被实例化
     }
 
-    public static synchronized LazySingleton getInstance(){
-        if (instance == null){
+    public static synchronized LazySingleton getInstance() {
+        if (instance == null) {
             instance = new LazySingleton();
         }
         return instance;
@@ -29,7 +29,7 @@ class HungrySingleton {
 
     private static final HungrySingleton instance = new HungrySingleton();
 
-    private HungrySingleton(){
+    private HungrySingleton() {
 
     }
 
@@ -38,29 +38,28 @@ class HungrySingleton {
     }
 }
 
-class President{
+class President {
 
     private static volatile President president = null;
 
-    private President(){
+    private President() {
 
     }
 
-    public static synchronized President getInstance(){
+    public static synchronized President getInstance() {
 
-        if (president == null){
+        if (president == null) {
             president = new President();
-        }else {
+        } else {
             System.out.println("已经初始化总统对象");
         }
         return president;
     }
 
-    public void getName(){
+    public void getName() {
         System.out.println("我是美国总统: 特朗普");
 
     }
-
 
 
 }
@@ -69,24 +68,25 @@ class President{
 /**
  * 使用枚举进行创建单例对象
  */
-class EnumSingleton{
+class EnumSingleton {
 
-    private EnumSingleton(){
+    private EnumSingleton() {
     }
 
-    public static EnumSingleton getInstance(){
+    public static EnumSingleton getInstance() {
         return Singleton.INSTANCE.getSingleton();
     }
 
-    private enum Singleton{
+    private enum Singleton {
         INSTANCE;
 
         private EnumSingleton singleton;
 
-        Singleton(){
+        Singleton() {
             singleton = new EnumSingleton();
         }
-        public EnumSingleton getSingleton(){
+
+        public EnumSingleton getSingleton() {
             return singleton;
         }
     }

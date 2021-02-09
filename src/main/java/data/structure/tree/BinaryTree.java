@@ -68,11 +68,11 @@ public class BinaryTree<Data> {
         }
     }
 
-    public TreeNode<Data> inverseTreee(TreeNode<Data> node){
-        if (node == null){
+    public TreeNode<Data> inverseTreee(TreeNode<Data> node) {
+        if (node == null) {
             return null;
         }
-        TreeNode<Data> tmp =null;
+        TreeNode<Data> tmp = null;
         tmp = node.rightChildTree;
         node.rightChildTree = node.leftChildTree;
         node.leftChildTree = tmp;

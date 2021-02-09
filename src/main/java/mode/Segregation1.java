@@ -1,19 +1,20 @@
 package mode;
 
 
-
 interface IpettyGirl {
     //要有较好的面孔
     public void goodLooking();
+
     //要有较好的身材
     public void niceFigure();
+
     //要有较好的气质
     public void greatTemperament();
 
 
 }
 
-class PettyGirl implements IpettyGirl{
+class PettyGirl implements IpettyGirl {
 
     private String name;
 
@@ -38,20 +39,21 @@ class PettyGirl implements IpettyGirl{
 }
 
 
-abstract class AbstractSearcher{
+abstract class AbstractSearcher {
 
     protected IpettyGirl ipettyGirl;
 
     public AbstractSearcher(IpettyGirl ipettyGirl) {
         this.ipettyGirl = ipettyGirl;
     }
+
     //搜索美女， 列出美女信息
     public abstract void show();
 
 
 }
 
-class Searcher extends AbstractSearcher{
+class Searcher extends AbstractSearcher {
 
     public Searcher(IpettyGirl ipettyGirl) {
         super(ipettyGirl);

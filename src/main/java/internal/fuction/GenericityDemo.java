@@ -10,13 +10,14 @@ import java.util.List;
 
 /**
  * 这个类主要是泛型的demo，理解
+ *
  * @param <T>
  */
 public class GenericityDemo<T> {
 
     String namespace;
     //泛型数组
-    T[] e = (T[])new Object[10];
+    T[] e = (T[]) new Object[10];
 
     String name;
 
@@ -27,17 +28,17 @@ public class GenericityDemo<T> {
     }
 
     //
-    public List<T> copy1(T[] e){
+    public List<T> copy1(T[] e) {
         ArrayList<T> list = new ArrayList<>();
-        for (T e1 : e){
+        for (T e1 : e) {
             list.add(e1);
         }
         return list;
     }
 
-    public static <E> List<E> copy(E[] e){
+    public static <E> List<E> copy(E[] e) {
         ArrayList<E> list = new ArrayList<>();
-        for (E e1 : e){
+        for (E e1 : e) {
             list.add(e1);
         }
         return list;
@@ -66,7 +67,7 @@ public class GenericityDemo<T> {
         //注意点，异常类不能是泛型
 
 
-        Integer[] integer = new Integer[]{1,2,3,4,5,6};
+        Integer[] integer = new Integer[]{1, 2, 3, 4, 5, 6};
         List<Integer> copy = GenericityDemo.copy(integer);
         System.out.println(copy);
 
@@ -77,7 +78,7 @@ public class GenericityDemo<T> {
     /**
      * 阐释泛型的协变和逆变
      */
-    public void GenericityForListArray(){
+    public void GenericityForListArray() {
         List<Object> list = new ArrayList<>();
         List<String> list2 = new ArrayList<>();
         List<String> list3 = new LinkedList<>();
@@ -96,7 +97,6 @@ public class GenericityDemo<T> {
         List<? extends Person> lists = null;
 //        lists.add(new Student())
         List<? super Person> listp = null;
-
 
 
         lists = list4;
@@ -119,19 +119,20 @@ public class GenericityDemo<T> {
 }
 
 
-
 //子对象继承泛型基类，不指定会自动格式化成Object
-class GenericityDemo2 extends GenericityDemo{
+class GenericityDemo2 extends GenericityDemo {
 
 
 }
+
 //子对象继承泛型基类，继承中指定类型，只能操作这个类型
-class GenericityDemo3 extends GenericityDemo<Integer>{
+class GenericityDemo3 extends GenericityDemo<Integer> {
 
 
 }
+
 //子对象继承泛型基类，继承中再指定泛型，则可以在子类中继续使用泛型
-class GenericityDemo4<T> extends GenericityDemo<T>{
+class GenericityDemo4<T> extends GenericityDemo<T> {
 
 
 }

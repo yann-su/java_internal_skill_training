@@ -1,22 +1,23 @@
 package mode;
 
 
-
 interface Interface1 {
     void operator1();
 }
 
-interface Interface2{
+interface Interface2 {
     void operator2();
+
     void operator3();
 }
 
-interface Interface3{
+interface Interface3 {
     void operator4();
+
     void operator5();
 }
 
-class B implements Interface1,Interface2{
+class B implements Interface1, Interface2 {
 
     @Override
     public void operator1() {
@@ -34,7 +35,7 @@ class B implements Interface1,Interface2{
     }
 }
 
-class D implements Interface1,Interface3{
+class D implements Interface1, Interface3 {
     @Override
     public void operator1() {
         System.out.println("D 实现了operator1");
@@ -52,25 +53,29 @@ class D implements Interface1,Interface3{
 }
 
 class A {
-    public void dependent1(Interface1 interface1){
+    public void dependent1(Interface1 interface1) {
         interface1.operator1();
     }
-    public void dependent2(Interface2 interface2){
+
+    public void dependent2(Interface2 interface2) {
         interface2.operator2();
     }
-    public void dependent3(Interface2 interface2){
+
+    public void dependent3(Interface2 interface2) {
         interface2.operator3();
     }
 }
 
 class C {
-    public void dependent1(Interface1 interface1){
+    public void dependent1(Interface1 interface1) {
         interface1.operator1();
     }
-    public void dependent2(Interface2 interface2){
+
+    public void dependent2(Interface2 interface2) {
         interface2.operator2();
     }
-    public void dependent3(Interface2 interface2){
+
+    public void dependent3(Interface2 interface2) {
         interface2.operator3();
     }
 }

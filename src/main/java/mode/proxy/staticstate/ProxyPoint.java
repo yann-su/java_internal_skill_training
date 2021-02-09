@@ -10,7 +10,6 @@ import mode.proxy.dynamic.jdk_proxy.TrainStation;
 public class ProxyPoint implements SellTickets {
 
 
-
     //声明火车站对象
 
     private TrainStation station = new TrainStation();

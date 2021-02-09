@@ -11,7 +11,6 @@ public class Client {
         proxyPoint.sell();
 
 
-
     }
 
 }

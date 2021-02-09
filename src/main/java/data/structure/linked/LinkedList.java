@@ -96,10 +96,10 @@ public class LinkedList<Data> {
         System.out.println("null");
     }
 
-    public void printFor(){
+    public void printFor() {
 
-        for( Node p = head; p != null; p = p.next){
-            System.out.print(p.data+"->");
+        for (Node p = head; p != null; p = p.next) {
+            System.out.print(p.data + "->");
         }
         System.out.print("null");
 

@@ -9,16 +9,15 @@ public class DependecyInversion1 {
 }
 
 
-
-interface IOpenAndClose{
+interface IOpenAndClose {
     public void open(ITv iTv);
 }
 
-interface ITv{
+interface ITv {
     public void play();
 }
 
-class OpenAndClose implements IOpenAndClose{
+class OpenAndClose implements IOpenAndClose {
 
     @Override
     public void open(ITv iTv) {
@@ -26,7 +25,7 @@ class OpenAndClose implements IOpenAndClose{
     }
 }
 
-class ChangHong implements ITv{
+class ChangHong implements ITv {
 
     @Override
     public void play() {

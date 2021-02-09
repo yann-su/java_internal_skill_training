@@ -2,11 +2,11 @@ package mode;
 
 
 //依赖转换模式，使用多态，屏蔽信息
-interface IReceiver{
+interface IReceiver {
     String getMsg();
 }
 
-class Email implements IReceiver{
+class Email implements IReceiver {
     private String msg;
 
     public Email(String msg) {
@@ -19,7 +19,7 @@ class Email implements IReceiver{
     }
 }
 
-class Wechat implements IReceiver{
+class Wechat implements IReceiver {
 
     private String msg;
 
@@ -43,7 +43,7 @@ class Wechat implements IReceiver{
     }
 }
 
-class Person{
+class Person {
 
     public static void main(String[] args) {
         Wechat wechat = new Wechat("hi");
@@ -54,7 +54,7 @@ class Person{
         person.receive(email);
     }
 
-    public void receive(IReceiver iReceiver){
+    public void receive(IReceiver iReceiver) {
         System.out.println(iReceiver.getMsg());
     }
 

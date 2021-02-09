@@ -3,8 +3,6 @@ package mode.proxy.staticstate;
 
 /**
  * 火车站类
- *
- *
  */
 public class TrainStation implements SellTickets {
 

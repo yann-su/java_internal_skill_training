@@ -9,11 +9,11 @@ public class WithSugar extends CoffeeDecorator {
     @Override
     public double getCost() {
 
-        return super.getCost()+1;
+        return super.getCost() + 1;
     }
 
     @Override
     public String getIngredients() {
-        return super.getIngredients()+", Sugar";
+        return super.getIngredients() + ", Sugar";
     }
 }

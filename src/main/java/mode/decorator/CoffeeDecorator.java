@@ -4,7 +4,7 @@ public abstract class CoffeeDecorator implements Coffee {
 
     protected final Coffee decoratedCoffee;
 
-    public CoffeeDecorator(Coffee coffee){
+    public CoffeeDecorator(Coffee coffee) {
         decoratedCoffee = coffee;
     }
 

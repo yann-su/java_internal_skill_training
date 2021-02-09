@@ -1,6 +1,6 @@
 package mode.abstractfactory;
 
-public class WhitePig implements Pig{
+public class WhitePig implements Pig {
     @Override
     public void eat() {
 

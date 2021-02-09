@@ -14,19 +14,19 @@ public class LiskovSubstitution {
 
     }
 
-    public static void display(Person01 person01){
+    public static void display(Person01 person01) {
         person01.display();
     }
 
 }
 
-class Person01{
-    public void display(){
+class Person01 {
+    public void display() {
         System.out.println("this is person");
     }
 }
 
-class Man extends Person01{
+class Man extends Person01 {
 
 
     @Override

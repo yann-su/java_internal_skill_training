@@ -1,6 +1,6 @@
 package mode.abstractfactory;
 
-public class BlackAnimalFactory implements IAnimalFactory{
+public class BlackAnimalFactory implements IAnimalFactory {
     @Override
     public ICat createCat() {
         return new BlackCat();

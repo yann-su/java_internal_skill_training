@@ -12,7 +12,7 @@ public class LowOfDemeter {
     }
 }
 
-class Agent{
+class Agent {
 
     private Star star;
     private Fans fans;
@@ -30,17 +30,17 @@ class Agent{
         this.company = company;
     }
 
-    public void meeting(){
-        System.out.println(fans.getName()+"与明星"+star.getName()+"见面");
+    public void meeting() {
+        System.out.println(fans.getName() + "与明星" + star.getName() + "见面");
     }
 
-    public void bussiness(){
-        System.out.println(company.getName()+"与明星"+star.getName()+"洽谈业务");
+    public void bussiness() {
+        System.out.println(company.getName() + "与明星" + star.getName() + "洽谈业务");
     }
 
 }
 
-class Star{
+class Star {
     private String name;
 
     public Star(String name) {
@@ -52,7 +52,7 @@ class Star{
     }
 }
 
-class Fans{
+class Fans {
     private String name;
 
     public Fans(String name) {
@@ -65,9 +65,10 @@ class Fans{
 }
 
 
-class Company{
+class Company {
     private String name;
-    public Company(String name){
+
+    public Company(String name) {
         this.name = name;
     }
 

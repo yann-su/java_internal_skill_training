@@ -3,8 +3,6 @@ package mode.proxy.dynamic.jdk_proxy;
 
 /**
  * 火车站类
- *
- *
  */
 public class TrainStation implements SellTickets {
 

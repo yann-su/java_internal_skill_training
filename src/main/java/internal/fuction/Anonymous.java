@@ -29,27 +29,24 @@ public class Anonymous {
 //            }
 //        });
         //如上代码是匿名函数，如下代码为lambda表达式
-        Comparator<Integer> comparator = (t1,t2) -> t1.compareTo(t2);
-        Collections.sort(ages,comparator);
+        Comparator<Integer> comparator = (t1, t2) -> t1.compareTo(t2);
+        Collections.sort(ages, comparator);
         System.out.println(ages);
-
 
 
         //传统方式
         Calc calc = new Calc() {
             @Override
             public double add(double i, double j) {
-                return i + j ;
+                return i + j;
             }
         };
         double add = calc.add(10, 13);
         System.out.println(add);
 
         //第二种使用lambda表达式进行匿名操作
-        Calc calc1 = (double i,double j) -> i + j;
-        System.out.println(calc1.add(1,2));
-
-
+        Calc calc1 = (double i, double j) -> i + j;
+        System.out.println(calc1.add(1, 2));
 
 
     }

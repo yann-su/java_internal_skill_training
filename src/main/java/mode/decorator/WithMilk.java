@@ -15,6 +15,6 @@ public class WithMilk extends CoffeeDecorator {
     @Override
     public String getIngredients() {
         String additionalIngredient = "milk";
-        return super.getIngredients()+", "+additionalIngredient;
+        return super.getIngredients() + ", " + additionalIngredient;
     }
 }

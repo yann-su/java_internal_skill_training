@@ -1,6 +1,6 @@
 package mode.decorator;
 
-public class SimpleCoffee implements Coffee{
+public class SimpleCoffee implements Coffee {
 
 
     @Override
