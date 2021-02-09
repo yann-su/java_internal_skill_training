@@ -1,9 +1,17 @@
 package internal.fuction;
 
+import entity.Person;
+import entity.Student;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 这个类主要是泛型的demo，理解
+ * @param <T>
+ */
 public class GenericityDemo<T> {
 
     String namespace;
@@ -64,45 +72,12 @@ public class GenericityDemo<T> {
 
     }
 
-}
 
-
-
-//子对象继承泛型基类，不指定会自动格式化成Object
-class GenericityDemo2 extends GenericityDemo{
-
-
-}
-//子对象继承泛型基类，继承中指定类型，只能操作这个类型
-class GenericityDemo3 extends GenericityDemo<Integer>{
-
-
-
-}
-//子对象继承泛型基类，继承中再指定泛型，则可以在子类中继续使用泛型
-class GenericityDemo4<T> extends GenericityDemo<T>{
-
-
-}
-
-class Person{
-    @Override
-    public String toString() {
-        return "this is person";
-    }
-}
-
-class Student extends Person{
-    @Override
-    public String toString() {
-        return "this is student";
-    }
-}
-
-
-class GenericityTest{
-
-    public static void main(String[] args) {
+    @Test
+    /**
+     * 阐释泛型的协变和逆变
+     */
+    public void GenericityForListArray(){
         List<Object> list = new ArrayList<>();
         List<String> list2 = new ArrayList<>();
         List<String> list3 = new LinkedList<>();
@@ -138,12 +113,26 @@ class GenericityTest{
 //        listp.add(new Object());//逆变导致范围更变
 
         listp.add(new Student());
-
-
         System.out.println(lists.get(0));
-
-
     }
+
+}
+
+
+
+//子对象继承泛型基类，不指定会自动格式化成Object
+class GenericityDemo2 extends GenericityDemo{
+
+
+}
+//子对象继承泛型基类，继承中指定类型，只能操作这个类型
+class GenericityDemo3 extends GenericityDemo<Integer>{
+
+
+}
+//子对象继承泛型基类，继承中再指定泛型，则可以在子类中继续使用泛型
+class GenericityDemo4<T> extends GenericityDemo<T>{
+
 
 }
 
