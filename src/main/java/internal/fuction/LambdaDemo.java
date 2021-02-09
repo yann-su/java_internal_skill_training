@@ -1,4 +1,8 @@
-package java.internal.fuction;
+package internal.fuction;
+
+import interfaces.LambdaTestFuction;
+import interfaces.LambdaTestFuction2;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,8 +11,12 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class FunctionDemo {
+import static java.lang.String.format;
+
+public class LambdaDemo {
 
     public static void main(String[] args) {
         Function<Integer,Integer> function = i -> i+1;
@@ -68,7 +76,7 @@ public class FunctionDemo {
         int run = lambdaTestFuction.run(10);
         System.out.println(run);
 
-        LambdaTestFuction2<Integer,Integer> fuction2 = (t,e) -> t + e;
+        LambdaTestFuction2<Integer,Integer> fuction2 = (t, e) -> t + e;
         int run1 = fuction2.run(10, 2);
         System.out.println(run1);
 
@@ -111,25 +119,31 @@ public class FunctionDemo {
         return filtersArr;
     }
 
+    public String quoteIdentifier(String identifier) {
+        return "\"" + identifier + "\"";
+    }
+
+
+    public String getUpdateStatement(String tableName, String[] fieldNames, String[] conditionFields) {
+        String setClause = Arrays.stream(fieldNames)
+                .map(f -> format("%s = :%s", quoteIdentifier(f), f))
+                .collect(Collectors.joining(", "));
+        String conditionClause = Arrays.stream(conditionFields)
+                .map(f -> format("%s = :%s", quoteIdentifier(f), f))
+                .collect(Collectors.joining(" AND "));
+        return "UPDATE " + quoteIdentifier(tableName) +
+                " SET " + setClause +
+                " WHERE " + conditionClause;
+    }
+
+
+    @Test
+    public void Test01(){
+        Stream.iterate(0, t -> t+5).skip(5).limit(5).forEach(System.out::println);
+
+    }
+
 
 
 }
 
-
-//使用函数式接口来使用的时候
-@FunctionalInterface
-interface LambdaTestFuction<T,E>{
-
-    int run(T t);
-
-
-
-}
-
-@FunctionalInterface
-interface LambdaTestFuction2<T,E>{
-
-    int run(T t,E e);
-
-
-}
