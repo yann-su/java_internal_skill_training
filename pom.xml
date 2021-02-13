@@ -6,7 +6,11 @@
 
     <groupId>org.example</groupId>
     <artifactId>java_internal_skill_training</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>flink_run</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -16,6 +20,8 @@
         </dependency>
 
     </dependencies>
+
+
 
 
     <properties>
