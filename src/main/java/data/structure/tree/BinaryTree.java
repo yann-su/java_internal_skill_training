@@ -3,6 +3,8 @@ package data.structure.tree;
 
 //创建二叉树
 
+import org.junit.Test;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -82,6 +84,44 @@ public class BinaryTree<Data> {
     }
 
 
+
+    public static boolean isBalanced(TreeNode root) {
+        if (root==null) return true;
+        int dep=dfs(root);
+        if (dep==-1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    public static int dfs(TreeNode root){
+        if (root==null) return 0;
+        int left=dfs(root.leftChildTree);//分别遍历左右子树
+        int right=dfs(root.rightChildTree);
+        if (left==-1 || right==-1) return -1;//如果左右子树高度相差大于1,直接返回-1
+        left++;//计算左右子树高度,走了一层因此加1
+        right++;
+        if (Math.abs(left-right)>1) return -1;
+        return Math.max(right,left);//返回左右子树最大深度作为当前节点的深度
+    }
+
+
+    @Test
+    public void binaryTree(){
+        BinaryTree<Integer> binaryTree = new BinaryTree<>();
+        Integer[] arr2 = new Integer[]{1,2,2,3,3,null,null,4,4};
+        TreeNode<Integer> binaryTreeByArray2 = binaryTree.createBinaryTreeByArray(arr2, 0);
+        boolean balanced = isBalanced(binaryTreeByArray2);
+        System.out.println(balanced);
+//
+
+//        Integer[] arr3 = new Integer[]{3,9,20,null,null,15,7};
+//        TreeNode<Integer> binaryTreeByArray3 = binaryTree.createBinaryTreeByArray(arr3, 0);
+//        boolean balanced1 = isBalanced(binaryTreeByArray3);
+//        System.out.println(balanced1);
+    }
+
+
     public static void main(String[] args) {
 
         Integer[] arr = new Integer[]{3, 9, 20, null, null, 15, 7};
@@ -97,6 +137,16 @@ public class BinaryTree<Data> {
         System.out.println();
         TreeNode<Integer> integerTreeNode = binaryTree.inverseTreee(binaryTreeByArray);
         binaryTree.preOrderTree(integerTreeNode);
+        System.out.println();
+
+        Integer[] arr2 = new Integer[]{1,2,2,3,3,null,null,4,4};
+        Integer[] arr3 = new Integer[]{3,9,20,null,null,15,7};
+        TreeNode<Integer> binaryTreeByArray2 = binaryTree.createBinaryTreeByArray(arr2, 0);
+        TreeNode<Integer> binaryTreeByArray3 = binaryTree.createBinaryTreeByArray(arr3, 0);
+        boolean balanced = isBalanced(binaryTreeByArray2);
+        boolean balanced1 = isBalanced(binaryTreeByArray3);
+        System.out.println(balanced);
+        System.out.println(balanced1);
 
 
     }
