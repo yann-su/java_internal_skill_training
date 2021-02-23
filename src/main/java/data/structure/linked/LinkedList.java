@@ -104,6 +104,22 @@ public class LinkedList<Data> {
         return last;
     }
 
+
+    Node successsor = null;
+    public Node<Data> reverseN(Node head, int n){
+        if (n == 1){
+            successsor = head.next;
+            return head;
+        }
+        Node last = reverseN(head.next,n - 1);
+        head.next.next = head;
+        head.next = successsor;
+        return last;
+    }
+
+
+
+
     public void print() {
         Node temp = head;
         while (temp != null) {
@@ -135,6 +151,9 @@ public class LinkedList<Data> {
         linkedList.printFor();
         System.out.println();
         linkedList.head = linkedList.reverse(linkedList.head);
+        linkedList.printFor();
+        System.out.println();
+        linkedList.head = linkedList.reverseN(linkedList.head,2);
         linkedList.printFor();
 
 
