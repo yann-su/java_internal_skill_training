@@ -86,7 +86,7 @@ public class LinkedList<Data> {
         size++;
     }
 
-    // TODO: 2021/2/23 递归思想代码，反复研究，增加自身对递归的理解 
+    // TODO: 2021/2/23 递归思想代码，反复研究，增加自身对递归的理解
     /** 
      * 使用递归对单链表进行翻转（思想很重要，反复看）
      *    递归表达
@@ -94,7 +94,7 @@ public class LinkedList<Data> {
      *    1 <- 2 <- 3 <- 4 <- last
      *  |    |    |     |
      *null  null  null  null
-     * @return
+     * @return Node last(临时变量)
      */
     public Node<Data> reverse(Node head){
         if (head.next == null) return head;
