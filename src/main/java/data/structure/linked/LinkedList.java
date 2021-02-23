@@ -86,9 +86,9 @@ public class LinkedList<Data> {
         size++;
     }
 
-
-    /**
-     * 使用递归对单链表进行翻转
+    // TODO: 2021/2/23 递归思想代码，反复研究，增加自身对递归的理解 
+    /** 
+     * 使用递归对单链表进行翻转（思想很重要，反复看）
      *    递归表达
      *    1 -> 2 -> 3 -> 4 -> null
      *    1 <- 2 <- 3 <- 4 <- last
@@ -117,8 +117,16 @@ public class LinkedList<Data> {
         return last;
     }
 
-
-
+    //利用前进到
+    public Node<Data> reverseBetween(Node head, int m, int n) {
+        // base case
+        if (m == 1) {
+            return reverseN(head, n);
+        }
+        // 前进到反转的起点触发 base case,分成一个子问题
+        head.next = reverseBetween(head.next, m - 1, n - 1);
+        return head;
+    }
 
     public void print() {
         Node temp = head;
@@ -155,7 +163,9 @@ public class LinkedList<Data> {
         System.out.println();
         linkedList.head = linkedList.reverseN(linkedList.head,2);
         linkedList.printFor();
-
+        System.out.println();
+        linkedList.head = linkedList.reverseBetween(linkedList.head,2,3);
+        linkedList.printFor();
 
 
     }
