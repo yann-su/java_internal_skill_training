@@ -87,6 +87,23 @@ public class LinkedList<Data> {
     }
 
 
+    /**
+     * 使用递归对单链表进行翻转
+     *    递归表达
+     *    1 -> 2 -> 3 -> 4 -> null
+     *    1 <- 2 <- 3 <- 4 <- last
+     *  |    |    |     |
+     *null  null  null  null
+     * @return
+     */
+    public Node<Data> reverse(Node head){
+        if (head.next == null) return head;
+        Node last = reverse(head.next);
+        head.next.next = head;
+        head.next = null;
+        return last;
+    }
+
     public void print() {
         Node temp = head;
         while (temp != null) {
@@ -108,14 +125,20 @@ public class LinkedList<Data> {
 
     public static void main(String[] args) {
         LinkedList<Integer> linkedList = new LinkedList();
-        linkedList.addLast(313);
-        linkedList.addLast(3131);
-        linkedList.addLast(3131311);
-        linkedList.addLast(4111);
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        linkedList.addLast(3);
+        linkedList.addLast(4);
 //        linkedList.deleteLast();
 
 //        linkedList.deleteLast();
         linkedList.printFor();
+        System.out.println();
+        linkedList.head = linkedList.reverse(linkedList.head);
+        linkedList.printFor();
+
+
+
     }
 
 
