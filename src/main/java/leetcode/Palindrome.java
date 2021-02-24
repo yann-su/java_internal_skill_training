@@ -4,7 +4,9 @@ public class Palindrome {
     public static void main(String[] args) {
         boolean palindrome = isPalindrome(0);
         System.out.println(palindrome);
-        System.out.println(-7 % -3);
+        String number = "1111";
+        boolean palindrome1 = isPalindrome(number);
+        System.out.println(palindrome1);
     }
 
     /**
@@ -24,6 +26,17 @@ public class Palindrome {
         }
         return palindrome == expect;
 
+    }
+
+    public static boolean isPalindrome(String number){
+        int left = 0, right = number.length() - 1;
+        while (left < right){
+            if (number.charAt(left) != number.charAt(right))
+                return false;
+            left ++;
+            right --;
+        }
+        return true;
     }
 
 

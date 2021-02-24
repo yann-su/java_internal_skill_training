@@ -146,6 +146,19 @@ public class LinkedList<Data> {
 
     }
 
+    /**
+     * 后续遍历，参考二叉树的后序遍历
+     * @param head
+     */
+    public void traverse(Node<Data> head){
+        if (head != null) {
+            traverse(head.next);
+            System.out.print(head.data + " ");
+        }
+    }
+
+
+
 
     public static void main(String[] args) {
         LinkedList<Integer> linkedList = new LinkedList();
@@ -166,6 +179,9 @@ public class LinkedList<Data> {
         System.out.println();
         linkedList.head = linkedList.reverseBetween(linkedList.head,2,3);
         linkedList.printFor();
+        System.out.println();
+        linkedList.traverse(linkedList.head);
+
 
 
     }
