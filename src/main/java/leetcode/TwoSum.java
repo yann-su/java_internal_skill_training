@@ -1,5 +1,7 @@
 package leetcode;
 
+import entity.ListNode;
+
 import java.util.HashMap;
 
 public class TwoSum {
@@ -17,6 +19,17 @@ public class TwoSum {
         }
         return new int[]{0, 0};
     }
+
+
+
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        while (l1.next != null && l2.next != null){
+
+        }
+        return null;
+    }
+
 
     public static int[] twoSumWithHashMap(int[] nums, int target) {
         /**
@@ -37,6 +50,9 @@ public class TwoSum {
         int[] ints = twoSum(new int[]{2, 7, 11, 15}, 9);
         System.out.println(ints[0]);
         System.out.println(ints[1]);
+        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3, null)));
+
+
     }
 
 
