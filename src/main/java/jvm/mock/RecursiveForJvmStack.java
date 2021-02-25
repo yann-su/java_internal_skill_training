@@ -3,6 +3,7 @@ package jvm.mock;
 /**
  * 此代码是用来查看递归调用本地虚拟机栈的一个栈帧的次数
  * 使用-Xss256k 可以修改栈帧的大小，一般使用默认即可
+ * 查看线程使用jstack查看
  */
 public class RecursiveForJvmStack {
 
