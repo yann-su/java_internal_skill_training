@@ -15,9 +15,9 @@ public class StringTable {
         //注释中是s4编译中实际的执行代码
         //1.8 执行的方式 new StringBuilder().append("a").append("b").toString(); //newString(value, 0, count)
         //1.9以后使用了InvokeDynamic 来进行链接，但是实际上都不是指向一个位置， (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;反编译结果
-        String s4 = s1 + s3;
+        String s4 = s1 + s2; //是一个变量，拼接需要在对象里卖弄
 
-        String s5 = "a"+"b";
+        String s5 = "a"+"b"; //常量在编译期间已经知道
 
         //1.8中 在s4中是在堆中创建了一个新的对象 newString对象，故实际上是是不一样的
         //1.9以后使用了InvokeDynamic
