@@ -25,6 +25,15 @@ public class StringTable {
         //在使用的编译Javac的时候，使用"a"+"b"时候，已经知道是是一个常量，执行了“ab”
         System.out.println(s5 == s3);
 
+
+        // new String("ab") //new StringBuilder().append("a").append("b").toString();
+        String s = new String("a") +  new String("b");
+        //将s的对象尝试放入串池中，
+        String sIntern = s.intern();
+        //返回的sIntern是放在了串池中
+        System.out.println(sIntern == s3);
+
+
     }
 
 
