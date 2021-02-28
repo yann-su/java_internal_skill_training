@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 //-Xmx10m设置，跑的时候出现如下的错误.在1.6在永久代（方法区）中，在1.8以后在堆内存中，原因是为了更好的垃圾回收，
-
+//StringTable 垃圾回收机制
+//-XX:+PrintStringTableStatistics -XX:+PrintGCDetails -verbose:gc
+//调整-XX:StringTableSize=10000 桶个数，因为StringTable是一个HashTable 桶数越多碰撞次数越少
+//intern 判断字符串对象是否需要进入StringTable中减少对象的开销
 /**
  *  java.lang.OutOfMemoryError: Java heap space
  * 	at java.base/java.util.Arrays.copyOf(Arrays.java:3511)
