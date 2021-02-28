@@ -2,7 +2,7 @@ package jvm.mock;
 
 public class JavaStringDeferConstans {
 
-    //验证常量值是延迟加载的，debug得出
+    //验证常量值是延迟加载的，debug得出,常量查看String对象
     public static void main(String[] args) {
 
         //每执行一行不同的输出放在常量池里的多+1
