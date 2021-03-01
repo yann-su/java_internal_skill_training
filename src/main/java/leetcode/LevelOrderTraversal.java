@@ -17,7 +17,7 @@ public class LevelOrderTraversal {
         treeNode.right = right;
         System.out.println(treeNode);
         LevelOrderTraversal levelOrderTraversal = new LevelOrderTraversal();
-//        levelOrderTraversal.levelOrder(treeNode);
+        levelOrderTraversal.levelOrder(treeNode);
 
 
 
@@ -34,11 +34,12 @@ public class LevelOrderTraversal {
             TreeNode poll = queue.poll();
             System.out.println(queue);
             System.out.println(poll.val);
-            if (root.left != null){
-                queue.add(root.left);
+            //此处是
+            if (poll.left != null){
+                queue.add(poll.left);
             }
-            if (root.right != null){
-                queue.add(root.right);
+            if (poll.right != null){
+                queue.add(poll.right);
             }
         }
     }
