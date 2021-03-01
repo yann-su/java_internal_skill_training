@@ -17,31 +17,40 @@ public class LevelOrderTraversal {
         treeNode.right = right;
         System.out.println(treeNode);
         LevelOrderTraversal levelOrderTraversal = new LevelOrderTraversal();
-        levelOrderTraversal.levelOrder(treeNode);
-
+        List<List<Integer>> list = levelOrderTraversal.levelOrder(treeNode);
+        System.out.println(list);
 
 
     }
 
 
-    public void levelOrder(TreeNode root) {
+    //按层序
+    public List<List<Integer>> levelOrder(TreeNode root) {
         if (root == null) {
-            return;
+            return new ArrayList<>();
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
+        List<List<Integer>> queueList = new ArrayList<>();
         while (!queue.isEmpty()){
-            TreeNode poll = queue.poll();
-            System.out.println(queue);
-            System.out.println(poll.val);
-            //此处是
-            if (poll.left != null){
-                queue.add(poll.left);
+            int size = queue.size();
+            ArrayList<Integer> queueListOne = new ArrayList<>();
+            //提前使队列先出栈，同一批次的
+            for (int i = 0; i < size;i ++){
+                TreeNode poll = queue.poll();
+                queueListOne.add(poll.val);
+                //此处是
+                if (poll.left != null){
+                    queue.add(poll.left);
+                }
+                if (poll.right != null){
+                    queue.add(poll.right);
+                }
             }
-            if (poll.right != null){
-                queue.add(poll.right);
-            }
+            queueList.add(queueListOne);
+            System.gc();
         }
+        return queueList;
     }
 
 
