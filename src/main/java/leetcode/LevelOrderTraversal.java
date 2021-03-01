@@ -2,10 +2,7 @@ package leetcode;
 
 import entity.TreeNode;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class LevelOrderTraversal {
 
@@ -48,7 +45,6 @@ public class LevelOrderTraversal {
                 }
             }
             queueList.add(queueListOne);
-            System.gc();
         }
         return queueList;
     }
