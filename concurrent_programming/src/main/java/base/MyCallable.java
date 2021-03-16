@@ -1,21 +1,21 @@
 package base;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 
+@Slf4j(topic = "c.MyCallable")
 public class MyCallable implements Callable {
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(MyCallable.class);
     @Override
     public Integer call() throws Exception {
-        System.out.println("call is running");
-//        log.debug("call is running");
+        log.info("call is running");
         long startTime = System.currentTimeMillis();
         Thread.sleep(10000);
-        System.out.println((System.currentTimeMillis() - startTime)/1000);
+        log.info("{}",(System.currentTimeMillis() - startTime));
         return 1000;
     }
 
