@@ -21,7 +21,7 @@ public class WordCount {
 
 
         DataStream<String> dataStream = env.fromElements("hello word he", "li hua from Canada", "where true print false","he he he");
-        /***
+        /*
          * 默认情况下，flink可以从方法签名中获取范型信息，但是 void flatMap(IN value, Collector<OUT> out)
          * 由javac编译后，会变成 void flatMap(IN value, Collector out),导致范型丢失，
          * 导致flink无法自动推断出类型，flink会认为是Object类型，从而导致无效的序列化类型。
