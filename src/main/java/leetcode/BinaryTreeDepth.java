@@ -68,4 +68,27 @@ public class BinaryTreeDepth {
         return depth;
     }
 
+
+    /**
+     * 求最小的深度
+     * @param treeNode
+     * @return
+     */
+    public int minDepth(TreeNode treeNode){
+        if (treeNode == null){
+            return 0;
+        }
+        int l = minDepth(treeNode.left);
+        int r = minDepth(treeNode.right);
+        if (treeNode.left == null && treeNode.right != null){
+            return 1 + r;
+        }
+        if (treeNode.left != null && treeNode.right == null){
+            return 1 + l;
+        }
+        int res = 1 + Math.min(l,r);
+        return res;
+    };
+
+
 }
