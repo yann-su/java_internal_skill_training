@@ -34,17 +34,17 @@ public class SocketWordCount {
             return;
         }
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        DataStreamSource<String> stringDataStreamSource = env.socketTextStream(hostname, port, "\n");
+        DataStreamSource<String> stringDataStreamSource = env.socketTextStream(hostname, port, "\n").setParallelism(1);
 
 
         DataStream<Tuple2<String,Integer>> flatMapStream = stringDataStreamSource.flatMap((String a, Collector<Tuple2<String,Integer>> out) ->
                 Arrays.stream(a.split(" ")).forEach(x -> out.collect(Tuple2.of(x,1)))
-        ).returns(Types.TUPLE(Types.STRING,Types.INT));
+        ).returns(Types.TUPLE(Types.STRING,Types.INT)).setParallelism(2).slotSharingGroup("red");
 
 
         KeyedStream<Tuple2<String, Integer>, String> tuple2StringKeyedStream = flatMapStream.keyBy(x -> x.f0);
 //
-        DataStream<Tuple2<String, Integer>> sumStream = tuple2StringKeyedStream.sum(1).setParallelism(1);
+        DataStream<Tuple2<String, Integer>> sumStream = tuple2StringKeyedStream.sum(1).setParallelism(1).setParallelism(1).slotSharingGroup("he");
 //
 
         sumStream.print();
