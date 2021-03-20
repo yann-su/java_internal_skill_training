@@ -39,7 +39,7 @@ public class SocketWordCount {
 
         DataStream<Tuple2<String,Integer>> flatMapStream = stringDataStreamSource.flatMap((String a, Collector<Tuple2<String,Integer>> out) ->
                 Arrays.stream(a.split(" ")).forEach(x -> out.collect(Tuple2.of(x,1)))
-        ).returns(Types.TUPLE(Types.STRING,Types.INT)).setParallelism(2);
+        ).returns(Types.TUPLE(Types.STRING,Types.INT)).setParallelism(2).slotSharingGroup("red");
 
 
         KeyedStream<Tuple2<String, Integer>, String> tuple2StringKeyedStream = flatMapStream.keyBy(x -> x.f0);
