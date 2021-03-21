@@ -41,6 +41,7 @@ public class SocketWordCount {
                 Arrays.stream(a.split(" ")).forEach(x -> out.collect(Tuple2.of(x,1)))
         ).returns(Types.TUPLE(Types.STRING,Types.INT)).setParallelism(2).slotSharingGroup("red");
 
+        //this 
 
         KeyedStream<Tuple2<String, Integer>, String> tuple2StringKeyedStream = flatMapStream.keyBy(x -> x.f0);
 //
