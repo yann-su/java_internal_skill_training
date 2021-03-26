@@ -1,4 +1,4 @@
-package CAS;
+package cas;
 
 public class TestCAS {
 
