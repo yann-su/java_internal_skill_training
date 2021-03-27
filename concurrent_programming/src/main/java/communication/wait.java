@@ -9,6 +9,7 @@ public class wait {
 
     /**
      * 线程1和线程2 进入monitor的wait队列中，然后进入等待队列，当主线程使用lock.notifyAll()
+     * notify 和 wait 只在对象上，并且要持有相同的锁
      * @param args
      * @throws InterruptedException
      */
