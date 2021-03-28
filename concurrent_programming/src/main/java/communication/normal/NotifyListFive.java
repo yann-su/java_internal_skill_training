@@ -22,10 +22,11 @@ public class NotifyListFive implements Runnable {
         for (int i = 0; i < 10; i++) {
             myList.add();
             if (myList.size() == 5){
-                myList.notify();
+               myList.notifyAll();
                 log.info("e is {}",myList.size());
+//                Thread.sleep(10000);10000
+                myList.wait();
             }
-            Thread.sleep(1000);
             log.info("add elemnt {}",i+1);
         }
         }

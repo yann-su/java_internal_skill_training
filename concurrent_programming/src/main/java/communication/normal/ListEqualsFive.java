@@ -25,13 +25,13 @@ public class ListEqualsFive implements Runnable {
                e.printStackTrace();
            }
            if (myList.size() == 5){
-               log.info("myList size == ",myList.size());
+               log.info("myList size == {}",myList.size());
                log.info("ListEqualsFive is launch");
            }else {
                log.info("myList size == {} ",myList.size());
                log.info("NO!!!");
            }
-
+           myList.notifyAll();
        }
 
     }
