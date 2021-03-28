@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class wait {
 
+    //加final是为了初始化的时候只能一次，不能被修改引用
     final static Object lock = new Object();
 
     /**

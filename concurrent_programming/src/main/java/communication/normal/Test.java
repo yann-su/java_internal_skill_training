@@ -2,7 +2,7 @@ package communication.normal;
 
 public class Test {
     public static void main(String[] args) {
-        Object lock = new Object();
+        final Object lock = new Object();
         try {
 
             ThreadB threadB = new ThreadB(lock);
