@@ -15,14 +15,14 @@ public class HiveWordCount {
 //        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         EnvironmentSettings settings = EnvironmentSettings.newInstance().useBlinkPlanner().build();
         TableEnvironment tableEnv = TableEnvironment.create(settings);
-        String name            = "feat";
-        String defaultDatabase = "feat";
+        String name            = "default";
+        String defaultDatabase = "default";
         String hiveConfDir     = "/Users/backbook/opt/hive-conf";
         HiveCatalog hive = new HiveCatalog(name, defaultDatabase, hiveConfDir);
 
-        tableEnv.registerCatalog("feat",hive);
-        tableEnv.useCatalog("feat");
-        String sql = "select * from feat.relation_multi_afi_afiuid_phonenumber_openpay";
+        tableEnv.registerCatalog("default",hive);
+        tableEnv.useCatalog("default");
+        String sql = "select * from default.relation_multi_afi_afiuid_phonenumber_openpay";
 
         tableEnv.executeSql(sql).print();
 
