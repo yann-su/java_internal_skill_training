@@ -18,4 +18,9 @@ public class Student extends Person{
     private String sex;
 
 
+    public static int Sort(Student student1,Student student2){
+        return student2.getAge() - student1.getAge() ;
+    }
+
+
 }
