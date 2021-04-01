@@ -22,17 +22,17 @@ public class HiveWordCount {
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env, settings);
         env.setRuntimeMode(RuntimeExecutionMode.BATCH);
 
-        String name            = "feat";
-        String defaultDatabase = "feat";
+        String name            = "default";
+        String defaultDatabase = "default";
         String hiveConfDir     = "/Users/backbook/opt/hive-conf";
         HiveCatalog hive = new HiveCatalog(name, defaultDatabase, hiveConfDir);
 
-        tableEnv.registerCatalog("feat",hive);
-        tableEnv.useCatalog("feat");
+        tableEnv.registerCatalog("default",hive);
+        tableEnv.useCatalog("default");
 //        String sql = "insert into feat.flink_hive_test select" +
 //                " cast(19 as BIGINT),CAST('21311' as STRING),CAST(3123131 as BIGINT),CAST(31231 as BIGINT),CAST(3213141 AS BIGINT),CAST(2013 AS INT) ";
 
-        String sql = "select * from feat.flink_hive_test";
+        String sql = "select * from feat.dwd_afi_loan_iou";
         tableEnv.executeSql(sql).print();
 
 
