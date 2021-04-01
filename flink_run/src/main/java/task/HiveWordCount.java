@@ -1,6 +1,7 @@
 package task;
 
 import org.apache.flink.api.common.JobStatus;
+import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.TableEnvironment;
@@ -15,20 +16,23 @@ public class HiveWordCount {
 
     public static void main(String[] args) {
 
-//        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         EnvironmentSettings settings = EnvironmentSettings.newInstance().useBlinkPlanner().build();
-        TableEnvironment tableEnv = TableEnvironment.create(settings);
-        String name            = "feat";
-        String defaultDatabase = "feat";
+//        TableEnvironment tableEnv = TableEnvironment.create(settings);
+        StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env, settings);
+        env.setRuntimeMode(RuntimeExecutionMode.BATCH);
+
+        String name            = "default";
+        String defaultDatabase = "default";
         String hiveConfDir     = "/Users/backbook/opt/hive-conf";
         HiveCatalog hive = new HiveCatalog(name, defaultDatabase, hiveConfDir);
 
-        tableEnv.registerCatalog("feat",hive);
-        tableEnv.useCatalog("feat");
-//        String sql = "insert into feat.relation_multi_afi_afiuid_phonenumber_openpay select" +
+        tableEnv.registerCatalog("default",hive);
+        tableEnv.useCatalog("default");
+//        String sql = "insert into feat.flink_hive_test select" +
 //                " cast(19 as BIGINT),CAST('21311' as STRING),CAST(3123131 as BIGINT),CAST(31231 as BIGINT),CAST(3213141 AS BIGINT),CAST(2013 AS INT) ";
 
-        String sql = "select * from tableA";
+        String sql = "select * from feat.dwd_afi_loan_iou";
         tableEnv.executeSql(sql).print();
 
 
