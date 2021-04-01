@@ -29,10 +29,10 @@ public class HiveWordCount {
 
         tableEnv.registerCatalog("feat",hive);
         tableEnv.useCatalog("feat");
-//        String sql = "insert into feat.relation_multi_afi_afiuid_phonenumber_openpay select" +
+//        String sql = "insert into feat.flink_hive_test select" +
 //                " cast(19 as BIGINT),CAST('21311' as STRING),CAST(3123131 as BIGINT),CAST(31231 as BIGINT),CAST(3213141 AS BIGINT),CAST(2013 AS INT) ";
 
-        String sql = "select * from feat.relation_multi_afi_afiuid_phonenumber_openpay";
+        String sql = "select * from feat.flink_hive_test";
         tableEnv.executeSql(sql).print();
 
 
