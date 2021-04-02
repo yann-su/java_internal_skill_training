@@ -32,7 +32,7 @@ public class HiveWordCount {
 //        String sql = "insert into feat.flink_hive_test select" +
 //                " cast(19 as BIGINT),CAST('21311' as STRING),CAST(3123131 as BIGINT),CAST(31231 as BIGINT),CAST(3213141 AS BIGINT),CAST(2013 AS INT) ";
 
-        String sql = "select * from feat.dwd_afi_loan_iou";
+        String sql = "select * from feat.flink_hive_test";
         tableEnv.executeSql(sql).print();
 
 
