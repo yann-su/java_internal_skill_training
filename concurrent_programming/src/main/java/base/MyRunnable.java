@@ -1,5 +1,8 @@
 package base;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class MyRunnable implements Runnable{
 
 
@@ -13,7 +16,9 @@ public class MyRunnable implements Runnable{
         Thread thread = new Thread(myRunnable);
         //交给底层cpu调度
         thread.start();
-        System.out.println("hello world");
+
+        log.debug("hello callable");
+
 
     }
 

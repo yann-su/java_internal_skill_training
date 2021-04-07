@@ -27,7 +27,7 @@ public class NotifyListFive implements Runnable {
 //                Thread.sleep(10000);10000
                 myList.wait();
             }
-            log.info("add elemnt {}",i+1);
+            log.info("add element {}",i+1);
         }
         }
 
