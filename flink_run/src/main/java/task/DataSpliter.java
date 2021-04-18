@@ -51,7 +51,8 @@ public class DataSpliter {
         evenOutputStream.print("even").setParallelism(1);
 
 
-        env.execute("");
+        env.execute("dataSpliter");
+
 
 
 
