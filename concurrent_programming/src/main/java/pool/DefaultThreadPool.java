@@ -133,10 +133,4 @@ public class DefaultThreadPool <Job extends Runnable> implements ThreadPool<Job>
     }
 
 
-    public static void main(String[] args) {
-
-
-
-
-    }
 }
