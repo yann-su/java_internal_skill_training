@@ -63,3 +63,7 @@ Temporary Items
 target/
 
 ./mock_data/node_modules
+
+.project
+.classpath
+.factorypath
