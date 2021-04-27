@@ -1,8 +1,7 @@
 package pool;
 
-import pool.impl.ThreadPool;
+import pool.idal.ThreadPool;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;

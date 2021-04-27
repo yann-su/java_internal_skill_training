@@ -1,6 +1,6 @@
 package pool;
 
-import pool.impl.ThreadPool;
+import pool.idal.ThreadPool;
 
 import java.io.*;
 import java.net.ServerSocket;
