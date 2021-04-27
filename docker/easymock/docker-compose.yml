@@ -26,7 +26,7 @@ services:
 
   web:
     image: easymock/easymock:1.6.0
-    command: /bin/bash -c "npm start"
+    command: /bin/bash -c "npm run dev"
     ports:
       - 7300:7300
     volumes:
