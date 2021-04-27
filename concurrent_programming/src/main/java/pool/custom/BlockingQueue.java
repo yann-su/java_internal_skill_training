@@ -18,6 +18,15 @@ public class BlockingQueue<T> {
     private Condition emptyWaitSet = lock.newCondition();
     //5 容量
     private int capcity;
+
+    public BlockingQueue(){
+
+    }
+
+    public BlockingQueue(int capcity) {
+        this.capcity = capcity;
+    }
+
     //带超时的阻塞获取
     public T poll(long timeout, TimeUnit unit){
         lock.lock();
