@@ -16,7 +16,7 @@ services:
     image: redis:4.0.6
     command: redis-server --appendonly yes
     ports:
-      - 26379:6379
+      - 6379:6379
     volumes:
       # ./data/redis redis 数据文件存放地址，根据需要修改为本地地址
       - './data/redis:/data'
