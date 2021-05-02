@@ -23,13 +23,14 @@ public class ThreadPool {
         synchronized (workers){
             if (workers.size() < coreSize){
                 //
-                log.debug("新增worker{}",workers);
                 Worker worker = new Worker(task);
                 workers.add(worker);
                 worker.start();
+                log.debug("新增worker{}",workers);
                 return;
             }
-            log.debug("");
+            //超过核心数，加入到队列中去
+            log.debug("超过和核心数");
             taskQueue.put(task);
         }
     }
