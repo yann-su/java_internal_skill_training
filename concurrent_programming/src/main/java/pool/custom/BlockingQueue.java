@@ -1,11 +1,14 @@
 package pool.custom;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+@Slf4j
 public class BlockingQueue<T> {
 
     //1 任务队列
@@ -57,6 +60,7 @@ public class BlockingQueue<T> {
         try {
             while (queue.isEmpty()){
                 try {
+                    log.info("等待");
                     emptyWaitSet.await();
                 }catch (InterruptedException e){
                     e.printStackTrace();
@@ -70,18 +74,43 @@ public class BlockingQueue<T> {
         }
     }
 
-    public void put(T element){
+    public void put(T task){
         lock.lock();
         try {
             while (queue.size() == capcity){
                 try {
-                    fullWaitSet.wait();
+                    log.info("进入等待状态");
+                    fullWaitSet.await();
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
             }
-            queue.addLast(element);
+            queue.addLast(task);
             emptyWaitSet.signal();
+        }finally {
+            lock.unlock();
+        }
+    }
+
+
+    public boolean offer(T task,long timeout,TimeUnit timeUnit){
+        lock.lock();
+        try {
+            long nanos = timeUnit.toNanos(timeout);
+            while (queue.size() == capcity){
+                try {
+                    log.info("进入等待状态");
+                    if (nanos <= 0){
+                        return false;
+                    }
+                    nanos = fullWaitSet.awaitNanos(nanos);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+            queue.addLast(task);
+            emptyWaitSet.signal();
+            return true;
         }finally {
             lock.unlock();
         }
