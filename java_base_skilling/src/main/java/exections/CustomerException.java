@@ -1,6 +1,6 @@
 package exections;
 
-public class CustomerException extends RuntimeException{
+public class CustomerException extends Exception{
 
     private String CseId;
     private String description;
