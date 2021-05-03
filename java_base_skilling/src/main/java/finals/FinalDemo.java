@@ -13,6 +13,7 @@ package finals;
 public class FinalDemo {
 
     //全局
+    //看log4j源码看别人如何使用final在实际生产中
     public final static String NAME;
     //可以在静态代码块进行赋值
     static {

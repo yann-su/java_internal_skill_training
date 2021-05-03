@@ -13,14 +13,14 @@ public class MetaDatabaseTest {
                 Dialect.MYSQL,
                 "jdbc:mysql://42.193.142.13:3306/",
                 "root",
-                "@!l8TD1Ew5r3"
+                "Server2008!"
         );
         DBMetadataUtils dbMetadataUtils = null;
         try {
             dbMetadataUtils = new DBMetadataUtils(dataSource);
 
             DatabaseConfig defaultConfig = dbMetadataUtils.getDefaultConfig();
-            List<IntrospectedTable> list = dbMetadataUtils.introspectTables(new DatabaseConfig("wordpress",null,"wp_comments"));
+            List<IntrospectedTable> list = dbMetadataUtils.introspectTables(new DatabaseConfig("nacos_config",null,"config_info"));
 //            List<IntrospectedTable> list = dbMetadataUtils.introspectTables(defaultConfig);
 
             for (IntrospectedTable table : list) {
