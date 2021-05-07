@@ -22,8 +22,8 @@ public class MySQLSource extends RichParallelSourceFunction<Student> {
     @Override
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
-        conn = DriverManager.getConnection("jdbc:mysql://192.168.1.102:3306/flinkdb", "root", "Server2008!");
-        String sql = "select id,name,age from flinkdb.student";
+        conn = DriverManager.getConnection("jdbc:mysql://42.193.142.13:3306/wiki", "root", "Server2008!");
+        String sql = "select id,name,id from wiki.demo";
         ps = conn.prepareStatement(sql);
     }
 
@@ -35,7 +35,7 @@ public class MySQLSource extends RichParallelSourceFunction<Student> {
             while (rs.next()){
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
-                int age = rs.getInt("age");
+                int age = rs.getInt("id");
                 sourceContext.collect(new Student(id,name,age));
             }
             sleep(10000);
