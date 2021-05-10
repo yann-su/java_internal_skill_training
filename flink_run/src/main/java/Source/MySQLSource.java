@@ -23,21 +23,22 @@ public class MySQLSource extends RichParallelSourceFunction<Student> {
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
         conn = DriverManager.getConnection("jdbc:mysql://42.193.142.13:3306/wiki", "root", "Server2008!");
-        String sql = "select id,name,id from wiki.demo";
-        ps = conn.prepareStatement(sql);
+
     }
 
     @Override
     public void run(SourceContext<Student> sourceContext) throws Exception {
-
+        String sql = "select id,name,1 as age from wiki.demo";
         while (flags){
+            ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()){
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
-                int age = rs.getInt("id");
+                int age = rs.getInt("age");
                 sourceContext.collect(new Student(id,name,age));
             }
+            sql = "select id,name,10 as age from wiki.demo";
             sleep(10000);
         }
 
