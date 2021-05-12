@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
+import static java.lang.Thread.sleep;
+
 public class WaterMarkDemo1 {
 
 
@@ -33,6 +35,8 @@ public class WaterMarkDemo1 {
         EnvironmentSettings settings = EnvironmentSettings.newInstance().useBlinkPlanner().build();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env, settings);
 
+
+        //产生数据
         DataStreamSource<Order> orderDataStreamSource = env.addSource(new RichParallelSourceFunction<Order>() {
 
             private boolean flag = true;
@@ -46,7 +50,7 @@ public class WaterMarkDemo1 {
                     int money = random.nextInt(100);
                     long eventTime = System.currentTimeMillis() - random.nextInt(20) * 1000;
                     sourceContext.collect(new Order(orderId, userId, money, eventTime));
-                    Thread.sleep(1000);
+                    sleep(1000);
                 }
             }
 
@@ -55,8 +59,6 @@ public class WaterMarkDemo1 {
                 flag = false;
             }
         });
-
-
 
 
         //基于事件时间进行计算
@@ -92,9 +94,14 @@ public class WaterMarkDemo1 {
                     Long createTime = order.getCreateTime();
                     strings.add(createTime+"");
                 }
+                long start = window.getStart();
+                long end = window.getEnd();
+                System.out.println(start+"-"+end+"-"+strings);
                 out.collect(keysSum);
             }
         });
+
+        result.print();
 
 
         //侧输出流解决数据延迟的数据丢失问题
@@ -106,8 +113,8 @@ public class WaterMarkDemo1 {
 
 
 //        result.print();
-        moneyTag.getSideOutput(lagTag).print("lag");
-        moneyTag.print("normal");
+//        moneyTag.getSideOutput(lagTag).print("lag");
+//        moneyTag.print("normal");
 
 
 
