@@ -3,6 +3,7 @@ package task.watermark;
 import entity.Order;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
+import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -14,6 +15,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.util.Collector;
+import org.apache.flink.util.OutputTag;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class WaterMarkDemo1 {
                     String orderId = UUID.randomUUID().toString();
                     int userId = random.nextInt(2);
                     int money = random.nextInt(100);
-                    long eventTime = System.currentTimeMillis() - random.nextInt(5) * 1000;
+                    long eventTime = System.currentTimeMillis() - random.nextInt(20) * 1000;
                     sourceContext.collect(new Order(orderId, userId, money, eventTime));
                     Thread.sleep(1000);
                 }
@@ -55,6 +57,8 @@ public class WaterMarkDemo1 {
         });
 
 
+
+
         //基于事件时间进行计算
 //        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime); //在新版本是按照EventTime
         //设置watermark
@@ -63,14 +67,18 @@ public class WaterMarkDemo1 {
                 assignTimestampsAndWatermarks(
 //                        WatermarkStrategy.<Order>forMonotonousTimestamps() //指定最大的允许乱序时间
 //                        WatermarkStrategy.<Order>forBoundedOutOfOrderness(Duration.ofSeconds(0)) 这个例子和上面的是一致的
-                        WatermarkStrategy.<Order>forBoundedOutOfOrderness(Duration.ofSeconds(3)) //指定最大的允许乱序时间
+                        WatermarkStrategy.<Order>forBoundedOutOfOrderness(Duration.ofSeconds(1)) //指定最大的允许乱序时间
                                 .withTimestampAssigner((order, timestamp) -> order.getCreateTime())//指定事件时间
                 );
 
-//        SingleOutputStreamOperator<Order> money = orderWithWater.keyBy(Order::getUserId).
-//                window(TumblingEventTimeWindows.of(Time.seconds(5))).sum("money");
+        //触发计算
+        SingleOutputStreamOperator<Order> money = orderWithWater.keyBy(Order::getUserId).
+                window(TumblingEventTimeWindows.of(Time.seconds(5))).sum("money");
 
 
+
+
+        //验证watermark
         SingleOutputStreamOperator<Object> result = orderWithWater.keyBy(Order::getUserId).
                 window(TumblingEventTimeWindows.of(Time.seconds(5)))
                 .apply(new WindowFunction<Order, Object, Integer, TimeWindow>() {
@@ -89,7 +97,19 @@ public class WaterMarkDemo1 {
         });
 
 
-        result.print();
+        //侧输出流解决数据延迟的数据丢失问题
+        OutputTag<Order> lagTag = new OutputTag<>("lag", TypeInformation.of(Order.class));
+        SingleOutputStreamOperator<Order> moneyTag = orderWithWater.keyBy(Order::getUserId)
+                .window(TumblingEventTimeWindows.of(Time.seconds(5)))
+                .allowedLateness(Time.seconds(3))
+                .sideOutputLateData(lagTag).sum("money");
+
+
+//        result.print();
+        moneyTag.getSideOutput(lagTag).print("lag");
+        moneyTag.print("normal");
+
+
 
         env.execute("");
 
