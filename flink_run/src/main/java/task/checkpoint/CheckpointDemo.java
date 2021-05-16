@@ -35,6 +35,7 @@ public class CheckpointDemo {
         conf.setString(ConfigConstants.METRICS_REPORTER_PREFIX+".influxdb.username","flink-metrics");
         conf.setString(ConfigConstants.METRICS_REPORTER_PREFIX+".influxdb.password","qwerty");
         conf.setString(ConfigConstants.METRICS_REPORTER_PREFIX+".influxdb.retentionPolicy","one_hour");
+//        conf.setString("execution.savepoint.path","");
         //自定义端口
         conf.setInteger(RestOptions.PORT, 8050);
         //本地env
