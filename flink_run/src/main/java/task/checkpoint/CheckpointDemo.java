@@ -80,7 +80,7 @@ public class CheckpointDemo {
         env.getCheckpointConfig().enableUnalignedCheckpoints();
 
 // sets the checkpoint storage where checkpoint snapshots will be written
-        env.getCheckpointConfig().setCheckpointStorage(new RocksDBStateBackend("file:///H:\\baidu\\视频-flink1.12入门到精通\\ck"));
+        env.getCheckpointConfig().setCheckpointStorage(new RocksDBStateBackend("file:///Users/backbook/data/ck"));
         env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
         //配置重启策略
 

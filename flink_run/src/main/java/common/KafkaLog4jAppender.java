@@ -327,7 +327,8 @@ public class KafkaLog4jAppender extends AppenderSkeleton {
             String className = stackTraceElements[stackTraceElements.length - 1].getClassName();
             taskName = className;
         }
-        return taskName+((this.layout == null) ? event.getRenderedMessage() : this.layout.format(event));
+        return ("{\"task_name\":\""+taskName+"\","+"\"log_message\":\""+((this.layout == null) ?
+                event.getRenderedMessage() : this.layout.format(event))+"\"}").replaceAll("\n","");
     }
 
     @Override
