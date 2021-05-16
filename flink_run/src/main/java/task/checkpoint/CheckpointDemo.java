@@ -3,6 +3,8 @@ package task.checkpoint;
 import entity.Order;
 import lombok.val;
 import org.apache.flink.api.common.RuntimeExecutionMode;
+import org.apache.flink.api.common.restartstrategy.RestartStrategies;
+import org.apache.flink.api.common.time.Time;
 import org.apache.flink.configuration.ConfigConstants;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.configuration.RestOptions;
@@ -15,6 +17,8 @@ import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 import static java.lang.Thread.sleep;
 
 public class CheckpointDemo {
@@ -40,7 +44,13 @@ public class CheckpointDemo {
         conf.setInteger(RestOptions.PORT, 8050);
         //本地env
         env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(conf);
-
+        //开发中经常用
+        env.setRestartStrategy(RestartStrategies.fixedDelayRestart(3, Time.of(10, TimeUnit.SECONDS)));
+//        env.setRestartStrategy(RestartStrategies.noRestart());
+//        env.setRestartStrategy(RestartStrategies.failureRateRestart(
+//                3,
+//                Time.of(5, TimeUnit.SECONDS),
+//                Time.of(3, TimeUnit.SECONDS)));
 
 
         // start a checkpoint every 1000 ms
