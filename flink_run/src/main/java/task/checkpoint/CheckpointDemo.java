@@ -8,7 +8,7 @@ import org.apache.flink.api.common.time.Time;
 import org.apache.flink.configuration.ConfigConstants;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.configuration.RestOptions;
-import org.apache.flink.contrib.streaming.state.RocksDBStateBackend;
+import org.apache.flink.contrib.streaming.state.EmbeddedRocksDBStateBackend;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -52,7 +52,8 @@ public class CheckpointDemo {
 //                Time.of(5, TimeUnit.SECONDS),
 //                Time.of(3, TimeUnit.SECONDS)));
 
-
+        //设置允许同时ck的数量
+        env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
         // start a checkpoint every 1000 ms
         env.enableCheckpointing(10000);
 
@@ -80,11 +81,12 @@ public class CheckpointDemo {
         env.getCheckpointConfig().enableUnalignedCheckpoints();
 
 // sets the checkpoint storage where checkpoint snapshots will be written
-        env.getCheckpointConfig().setCheckpointStorage(new RocksDBStateBackend("file:///Users/backbook/data/ck"));
-        env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
+//        env.getCheckpointConfig().setCheckpointStorage(new RocksDBStateBackend("file:///Users/backbook/data/ck"));
+
+        env.setStateBackend(new EmbeddedRocksDBStateBackend()); //开启RocksDB的新的方法
+        env.getCheckpointConfig().setCheckpointStorage("file:///Users/backbook/data/ck");
+
         //配置重启策略
-
-
 
 
         //产生数据
@@ -112,7 +114,7 @@ public class CheckpointDemo {
         });
 
         orderDataStreamSource.print();
-        env.execute();
+        env.execute(CheckpointDemo.class.getName());
 
 
 
