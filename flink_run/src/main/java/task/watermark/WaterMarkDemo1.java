@@ -4,6 +4,9 @@ import entity.Order;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
+import org.apache.flink.configuration.ConfigConstants;
+import org.apache.flink.configuration.Configuration;
+import org.apache.flink.configuration.RestOptions;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -30,11 +33,18 @@ public class WaterMarkDemo1 {
 
     public static void main(String[] args) throws Exception {
 
-        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
         EnvironmentSettings settings = EnvironmentSettings.newInstance().useBlinkPlanner().build();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env, settings);
 
+
+        Configuration conf = new Configuration();
+        conf.setBoolean(ConfigConstants.LOCAL_START_WEBSERVER, true);
+        //自定义端口
+        conf.setInteger(RestOptions.PORT, 8050);
+        //本地env
+        env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(conf);
 
         //产生数据
         DataStreamSource<Order> orderDataStreamSource = env.addSource(new RichParallelSourceFunction<Order>() {
@@ -76,8 +86,6 @@ public class WaterMarkDemo1 {
         //触发计算
         SingleOutputStreamOperator<Order> money = orderWithWater.keyBy(Order::getUserId).
                 window(TumblingEventTimeWindows.of(Time.seconds(5))).sum("money");
-
-
 
 
         //验证watermark

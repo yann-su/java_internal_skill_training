@@ -29,7 +29,7 @@ public class CustomSourceWordCount {
         tableEnv.toAppendStream(tableEnv.sqlQuery("select * from orderB"), Row.class).print();
         tableEnv.executeSql("select * from orderB").print();
 
-        env.execute();
+//        env.execute();
 
 
 
