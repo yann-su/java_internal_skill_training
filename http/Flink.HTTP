@@ -1,5 +1,9 @@
-GET http://localhost:8050/jobs/c5400221e2c9eea76a851f114b4c5276/plan
+GET http://localhost:8050/jobs/77d6c3f962e1fa0caefab732f1eb9e12/plan
 
 
 ###
 GET http://localhost:8050/jobs/c5400221e2c9eea76a851f114b4c5276/met
+
+###
+
+GET http://localhost:50049/jobs/0c221ed1226cccf609b1cb0b4f62884c/config

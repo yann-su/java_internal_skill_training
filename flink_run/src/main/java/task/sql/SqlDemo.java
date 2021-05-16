@@ -1,39 +1,22 @@
-package task.checkpoint;
+package task.sql;
 
-import entity.Order;
-import lombok.val;
 import org.apache.flink.api.common.RuntimeExecutionMode;
-import org.apache.flink.api.common.eventtime.WatermarkStrategy;
-import org.apache.flink.api.common.restartstrategy.RestartStrategies;
-import org.apache.flink.api.common.time.Time;
-import org.apache.flink.configuration.ConfigConstants;
-import org.apache.flink.configuration.Configuration;
-import org.apache.flink.configuration.RestOptions;
+import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.contrib.streaming.state.EmbeddedRocksDBStateBackend;
-import org.apache.flink.streaming.api.datastream.DataStreamSource;
-import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 
-import java.time.Duration;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
-import static java.lang.Thread.sleep;
-
-public class CheckpointDemo {
-
+public class SqlDemo {
     public static void main(String[] args) throws Exception {
+
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
         EnvironmentSettings settings = EnvironmentSettings.newInstance().useBlinkPlanner().build();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env, settings);
-
 
         //开发中经常用
 //        env.setRestartStrategy(RestartStrategies.fixedDelayRestart(3, Time.of(10, TimeUnit.SECONDS)));
@@ -77,49 +60,12 @@ public class CheckpointDemo {
         env.setStateBackend(new EmbeddedRocksDBStateBackend()); //开启RocksDB的新的方法
         env.getCheckpointConfig().setCheckpointStorage("file:///Users/backbook/data/ck");
 
-        //配置重启策略
+        ParameterTool sourceProperties = ParameterTool.fromPropertiesFile(SqlDemo.class.getClassLoader().getResourceAsStream("kafka.properties"));
+        String dwdAfiLoanRepay = sourceProperties.get("a");
+        tableEnv.executeSql(dwdAfiLoanRepay);
+        tableEnv.executeSql("select * from a").print();
 
 
-        //产生数据
-        DataStreamSource<Order> orderDataStreamSource = env.addSource(new RichParallelSourceFunction<Order>() {
-
-            private boolean flag = true;
-
-            @Override
-            public void run(SourceContext<Order> sourceContext) throws Exception {
-                Random random = new Random();
-                while (flag) {
-                    String orderId = UUID.randomUUID().toString();
-                    int userId = random.nextInt(2);
-                    int money = random.nextInt(100);
-                    long eventTime = System.currentTimeMillis() - random.nextInt(20) * 1000;
-                    sourceContext.collect(new Order(orderId, userId, money, eventTime));
-                    sleep(1000);
-                }
-            }
-            @Override
-            public void cancel() {
-                flag = false;
-            }
-        });
-
-        SingleOutputStreamOperator<Order> orderWithWater = orderDataStreamSource.
-                assignTimestampsAndWatermarks(
-//                        WatermarkStrategy.<Order>forMonotonousTimestamps() //指定最大的允许乱序时间
-//                        WatermarkStrategy.<Order>forBoundedOutOfOrderness(Duration.ofSeconds(0)) 这个例子和上面的是一致的
-                        WatermarkStrategy.<Order>forBoundedOutOfOrderness(Duration.ofSeconds(3)) //指定最大的允许乱序时间
-                                .withTimestampAssigner((order, timestamp) -> order.getCreateTime())//指定事件时间
-                );
-
-        orderWithWater.print();
-        env.execute(CheckpointDemo.class.getName());
-
-
-
-
-
-
+        env.execute(SqlDemo.class.getName());
     }
-
-
 }
