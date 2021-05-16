@@ -57,7 +57,7 @@ public class SinkTest2Redis {
         returns.addSink(new RedisSink<>(config, new RedisMapper<Student>() {
             @Override
             public RedisCommandDescription getCommandDescription() {
-                return new RedisCommandDescription(RedisCommand.SET);
+                return new RedisCommandDescription(RedisCommand.HSET,"person");
             }
 
             @Override
