@@ -58,6 +58,7 @@ public class KafkaLog4jAppender extends AppenderSkeleton {
 
     private String brokerList;
     private String topic;
+    private String taskName;
     private String compressionType;
     private String securityProtocol;
     private String sslTruststoreLocation;
@@ -321,10 +322,12 @@ public class KafkaLog4jAppender extends AppenderSkeleton {
     }
 
     private String subAppend(LoggingEvent event) {
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        String className = stackTraceElements[stackTraceElements.length - 1].getClassName();
-        System.out.println(className);
-        return className+((this.layout == null) ? event.getRenderedMessage() : this.layout.format(event));
+        if (taskName == null || !taskName.split("\\.")[0].equals("task")){
+            StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+            String className = stackTraceElements[stackTraceElements.length - 1].getClassName();
+            taskName = className;
+        }
+        return taskName+((this.layout == null) ? event.getRenderedMessage() : this.layout.format(event));
     }
 
     @Override
