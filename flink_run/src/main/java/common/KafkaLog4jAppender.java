@@ -321,7 +321,10 @@ public class KafkaLog4jAppender extends AppenderSkeleton {
     }
 
     private String subAppend(LoggingEvent event) {
-        return Thread.currentThread().getStackTrace()[1].getClassName()+((this.layout == null) ? event.getRenderedMessage() : this.layout.format(event));
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        String className = stackTraceElements[stackTraceElements.length - 1].getClassName();
+        System.out.println(className);
+        return className+((this.layout == null) ? event.getRenderedMessage() : this.layout.format(event));
     }
 
     @Override
