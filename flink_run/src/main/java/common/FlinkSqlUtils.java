@@ -45,7 +45,7 @@ public class FlinkSqlUtils {
         String sql = "  select * from t ";
         List<String> strings = parseFlinkSql(sql);
 
-        System.out.println(strings);
+        strings.forEach(System.out::println);
 
 
     }

@@ -2,7 +2,7 @@ GET http://localhost:8050/jobs/77d6c3f962e1fa0caefab732f1eb9e12/plan
 
 
 ###
-GET http://localhost:8050/jobs/c5400221e2c9eea76a851f114b4c5276/met
+GET http://localhost:49954/jobs/542f215321a1459305fae5402499b5fd/metrics?get=lastCheckpointExternalPath
 
 ###
 
