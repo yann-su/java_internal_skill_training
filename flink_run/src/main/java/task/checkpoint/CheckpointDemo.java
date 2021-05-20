@@ -1,14 +1,9 @@
 package task.checkpoint;
 
 import entity.Order;
-import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
-import org.apache.flink.api.common.restartstrategy.RestartStrategies;
-import org.apache.flink.api.common.time.Time;
-import org.apache.flink.configuration.ConfigConstants;
-import org.apache.flink.configuration.Configuration;
-import org.apache.flink.configuration.RestOptions;
 import org.apache.flink.contrib.streaming.state.EmbeddedRocksDBStateBackend;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
@@ -21,11 +16,12 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import java.time.Duration;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
+@Slf4j
 public class CheckpointDemo {
+
 
     public static void main(String[] args) throws Exception {
 
@@ -34,6 +30,7 @@ public class CheckpointDemo {
         EnvironmentSettings settings = EnvironmentSettings.newInstance().useBlinkPlanner().build();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env, settings);
 
+        log.info("CheckpointDemo开始");
 
         //开发中经常用
 //        env.setRestartStrategy(RestartStrategies.fixedDelayRestart(3, Time.of(10, TimeUnit.SECONDS)));

@@ -13,6 +13,7 @@
         <module>concurrent_programming</module>
         <module>spark_run</module>
         <module>java_base_skilling</module>
+        <module>canal</module>
     </modules>
 
     <properties>
