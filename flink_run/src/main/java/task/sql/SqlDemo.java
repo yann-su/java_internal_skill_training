@@ -49,7 +49,7 @@ public class SqlDemo {
 // enable externalized checkpoints which are retained
 // after job cancellation
         env.getCheckpointConfig().enableExternalizedCheckpoints(
-                CheckpointConfig.ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION);
+                CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
 
 // enables the experimental unaligned checkpoints
         env.getCheckpointConfig().enableUnalignedCheckpoints();
