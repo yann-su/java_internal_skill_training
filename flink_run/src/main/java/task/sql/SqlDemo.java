@@ -6,6 +6,7 @@ import org.apache.flink.contrib.streaming.state.EmbeddedRocksDBStateBackend;
 import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.EnvironmentSettings;
+import org.apache.flink.table.api.TableResult;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 
 
@@ -61,11 +62,12 @@ public class SqlDemo {
         env.getCheckpointConfig().setCheckpointStorage("file:///Users/backbook/data/ck");
 
         ParameterTool sourceProperties = ParameterTool.fromPropertiesFile(SqlDemo.class.getClassLoader().getResourceAsStream("kafka.properties"));
-        String dwdAfiLoanRepay = sourceProperties.get("a");
-        tableEnv.executeSql(dwdAfiLoanRepay);
-        tableEnv.executeSql("select * from a").print();
+        String dwdAfiloanIou = sourceProperties.get("dwdrt_backbook");
+        String print = sourceProperties.get("print");
+        tableEnv.executeSql(dwdAfiloanIou);
+        tableEnv.executeSql(print);
+        TableResult tableResult = tableEnv.executeSql("insert into print_table select * from dwdrt_backbook");
 
-
-        env.execute(SqlDemo.class.getName());
+//        tableEnv.
     }
 }
