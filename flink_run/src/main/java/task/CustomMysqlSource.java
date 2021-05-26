@@ -8,6 +8,8 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 
+import static org.apache.flink.table.api.Expressions.$;
+
 public class CustomMysqlSource {
 
     public static void main(String[] args) throws Exception {
@@ -18,7 +20,10 @@ public class CustomMysqlSource {
 
         DataStreamSource<Student> studentDataStreamSource = env.addSource(new MySQLSource()).setParallelism(1);
 
-        studentDataStreamSource.print();
+        //转化成Flink sql
+        tableEnv.createTemporaryView("orderB",studentDataStreamSource,$("Id"),$("age"),$("name"));
+
+        tableEnv.executeSql("select * from orderB").print();
 
         env.execute("");
 
