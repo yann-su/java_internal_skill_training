@@ -16,4 +16,6 @@ public class Student {
 
     private int age;
 
+    private long createTimestamp;
+
 }

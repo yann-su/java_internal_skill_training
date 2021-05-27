@@ -43,7 +43,7 @@ public class SinkTest2Redis {
             String s1 = s[1];
             int s2 = Integer.parseInt(s[2]);
 
-            out.collect(new Student(s0, s1, s2));
+            out.collect(new Student(s0, s1, s2,System.currentTimeMillis()));
 
         }).returns(Student.class);
 

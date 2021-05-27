@@ -36,7 +36,7 @@ public class MySQLSource extends RichParallelSourceFunction<Student> {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 int age = rs.getInt("age");
-                sourceContext.collect(new Student(id,name,age));
+                sourceContext.collect(new Student(id,name,age,System.currentTimeMillis()));
             }
             sql = "select id,name,10 as age from wiki.demo";
             sleep(10000);
