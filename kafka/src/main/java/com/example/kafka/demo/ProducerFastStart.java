@@ -3,6 +3,7 @@ package com.example.kafka.demo;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 
@@ -18,14 +19,14 @@ public class ProducerFastStart {
         //设置重试次数
         properties.put(ProducerConfig.RETRIES_CONFIG,10);
         //设置key序列化器
-        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,"org.apache.kafka.common.serialization.StringSerializer");
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         //设置值序列化器
-        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,"org.apache.kafka.common.serialization.StringSerializer");
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
         //设置集群地址
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,BOOTSTRAP_SERVERS);
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
-        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(TOPIC,"kafka-demo","hello,kafka");
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(TOPIC,"23131131","hello,kafka");
         try {
             producer.send(producerRecord);
         }catch (Exception e){
