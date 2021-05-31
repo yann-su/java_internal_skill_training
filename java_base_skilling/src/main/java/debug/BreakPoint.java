@@ -17,7 +17,7 @@ public class BreakPoint {
     public static void method(){
         System.out.println();
         Calc calc = new Add();
-        calc.add(10,11);
+        calc.calculate(10,11);
     }
     
     public static void exception(){
