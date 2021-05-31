@@ -31,10 +31,13 @@ public class ConsumerFastStart {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
         consumer.subscribe(Arrays.asList(TOPIC));
-        ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10000));
-        System.out.println(records.count());
-        for (ConsumerRecord<String, String> record : records) {
-            System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+
+        while (true){
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10000));
+            System.out.println(records.count());
+            for (ConsumerRecord<String, String> record : records) {
+                System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+            }
         }
     }
 }
