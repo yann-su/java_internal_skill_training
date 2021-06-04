@@ -14,6 +14,7 @@
         <module>spark_run</module>
         <module>java_base_skilling</module>
         <module>canal</module>
+        <module>netty</module>
     </modules>
 
     <properties>
