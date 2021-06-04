@@ -8,7 +8,7 @@ import java.util.concurrent.Future;
 
 public class ProducerFastStart {
 
-    private static final String BOOTSTRAP_SERVERS = "192.168.16.110:9092";
+    private static final String BOOTSTRAP_SERVERS = "192.168.1.105:9092";
 
     private static final String TOPIC = "test";
 
