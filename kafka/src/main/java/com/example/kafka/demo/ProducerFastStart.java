@@ -1,15 +1,14 @@
 package com.example.kafka.demo;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
+import java.util.concurrent.Future;
 
 public class ProducerFastStart {
 
-    private static final String BOOTSTRAP_SERVERS = "192.168.1.105:9092";
+    private static final String BOOTSTRAP_SERVERS = "192.168.16.110:9092";
 
     private static final String TOPIC = "test";
 
@@ -28,7 +27,24 @@ public class ProducerFastStart {
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
         ProducerRecord<String, String> producerRecord = new ProducerRecord<>(TOPIC,"23131131","hello,kafka");
         try {
-            producer.send(producerRecord);
+            //同步发送
+            Future<RecordMetadata> send = producer.send(producerRecord);
+            RecordMetadata recordMetadata = send.get();
+            System.out.println(recordMetadata.topic());
+            System.out.println(recordMetadata.timestamp());
+            System.out.println(recordMetadata.partition());
+            System.out.println(recordMetadata.offset());
+
+            producer.send(producerRecord, (metadata, exception) -> {
+                if (exception == null){
+                    System.out.println(metadata.topic());
+                    System.out.println(metadata.timestamp());
+                    System.out.println(metadata.partition());
+                    System.out.println(metadata.offset());
+                }
+            });
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
