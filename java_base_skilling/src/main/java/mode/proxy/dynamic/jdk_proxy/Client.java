@@ -10,6 +10,7 @@ public class Client {
         SellTickets proxyObject = proxyFactory.getProxyObject();
         //2、使用factory对象的方法获取代理对象
         proxyObject.sell();
+        proxyObject.notice();
 
 
     }

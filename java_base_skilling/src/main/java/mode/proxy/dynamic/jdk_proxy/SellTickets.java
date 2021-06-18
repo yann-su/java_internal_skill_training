@@ -8,4 +8,6 @@ public interface SellTickets {
 
     void sell();
 
+    void notice();
+
 }
