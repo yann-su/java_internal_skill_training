@@ -1,0 +1,40 @@
+server:
+  port: 9999
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    mapper:
+      propagate-transient-marker: true
+  thymeleaf:
+    prefix: "classpath:/static/"
+  #热部署组件
+  devtools:
+    restart:
+      enabled: true #是否支持热部署
+  datasource:
+    url: jdbc:mysql://42.193.142.13:3306/luwu?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: Server2008!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    hikari:
+        max-lifetime: 30000
+        connection-test-query: SELECT 1
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
