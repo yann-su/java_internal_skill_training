@@ -15,6 +15,7 @@
         <module>java_base_skilling</module>
         <module>canal</module>
         <module>netty</module>
+        <module>springboot_security_demo</module>
     </modules>
 
     <properties>
