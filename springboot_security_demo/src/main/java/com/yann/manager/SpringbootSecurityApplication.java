@@ -11,7 +11,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class SpringbootSecurityApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext run = SpringApplication.run(SpringbootSecurityApplication.class, args);
+      SpringApplication.run(SpringbootSecurityApplication.class, args);
     }
 
 }

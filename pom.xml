@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>flink_run</module>
+<!--        <module>flink_run</module>-->
         <module>concurrent_programming</module>
         <module>spark_run</module>
         <module>java_base_skilling</module>
