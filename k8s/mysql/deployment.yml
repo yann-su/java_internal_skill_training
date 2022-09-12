@@ -20,4 +20,4 @@ spec:
             - containerPort: 3306 # 容器应用监听的端口号
           env:
             - name: MYSQL_ROOT_PASSWORD # 设置mysql的初始化密码
-              value: "123456" # 设置mysql的初始化密码
+              value: "Server2008!" # 设置mysql的初始化密码
