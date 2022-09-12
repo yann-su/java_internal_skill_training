@@ -15,7 +15,7 @@ spec:
     spec:
       containers: # Pod的内容的定义部分
         - name: mysql # 容器的名称
-          image: mysql # 容器对应的Docker Image
+          image: mysql:5.7.0 # 容器对应的Docker Image
           ports:
             - containerPort: 3306 # 容器应用监听的端口号
           env:
