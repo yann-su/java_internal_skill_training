@@ -109,7 +109,7 @@ public class KeywordUtil {
     }
 
 
-    public static void readExcel(String pathSource, String sourceName, List<Integer> colIndex) {
+    public static List<Cell[]> readExcel(String pathSource, String sourceName, List<Integer> colIndex) {
         try {
 			/*// 如果需要通过URL获取资源的加上以下的代码，不需要的省略就行
 			URL url = new URL(strURL);
@@ -142,17 +142,17 @@ public class KeywordUtil {
                 }
                 List<String> keywords = getKeywords(String.valueOf(contents), 20);
                 if (keywords.size() > 0){
-                    log.info("当前匹配到的数据是:{},匹配到的关键词是{},匹配到行是{}",contents,keywords,i);
+                    log.info("当前匹配到的数据是:{},匹配到的关键词是{},匹配到行是{}",contents,keywords,i+1);
                     cells.add(row);
                 }
             }
 
-            createSheet(pathSource,"res_"+sourceName,cells);
+            return cells;
+
         } catch (IOException | BiffException e) {
             e.printStackTrace();
-        } catch (WriteException e) {
-            throw new RuntimeException(e);
         }
+        return null;
     }
 
     public static void createSheet(String path,String name,List<Cell[]> cells) throws IOException, WriteException {
@@ -186,32 +186,13 @@ public class KeywordUtil {
         colIndex.add(24);
         colIndex.add(25);
 
-        readExcel("/Users/yann/IdeaProjects/java_internal_skill_training/java_base_skilling/src/main/resources/","2014.xls",colIndex);
+        List<Cell[]> cells = readExcel("/Users/yann/IdeaProjects/java_internal_skill_training/java_base_skilling/src/main/resources/", "2014.xls", colIndex);
 
-//        CsvReader newCsvReader = new CsvReader("/Users/yann/IdeaProjects/java_internal_skill_training/java_base_skilling/src/main/resources/1024.txt",'\t', Charset.forName("UTF-8"));
-//        //读取表头
-//        newCsvReader.readHeaders();
-//
-//        //读取到的行数内容存入到集合中
-//        ArrayList<String> newCsvReaderList = new ArrayList<>();
-//
-//        //讲数据存储到集合中
-//        while (newCsvReader.readRecord()) {
-//            //读取一整行
-//            newCsvReaderList.add(newCsvReader.getRawRecord());
-//        }
-//
-//
-//
-//        for (int i = 0; i < newCsvReaderList.size(); i++) {
-//            KeywordUtil keywordUtil = new KeywordUtil();
-//            List<String> keywords = keywordUtil.getKeywords(newCsvReaderList.get(i), 20);
-//            if (keywords.size() > 0){
-//                System.out.println(i+1+":"+newCsvReaderList.get(i)+" "+keywords);
-//            }
-//        }
-
-
+        try {
+            createSheet("/Users/yann/IdeaProjects/java_internal_skill_training/java_base_skilling/src/main/resources/","res_2014.xls",cells);
+        } catch (WriteException e) {
+            throw new RuntimeException(e);
+        }
 
 
 
