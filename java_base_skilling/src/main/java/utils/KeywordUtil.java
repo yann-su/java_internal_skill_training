@@ -1,6 +1,12 @@
 package utils;
 
 import com.csvreader.CsvReader;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+import jxl.write.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.wltea.analyzer.cfg.Configuration;
 import org.wltea.analyzer.cfg.DefaultConfig;
@@ -8,6 +14,7 @@ import org.wltea.analyzer.core.IKSegmenter;
 import org.wltea.analyzer.core.Lexeme;
 import org.wltea.analyzer.dic.Dictionary;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
@@ -15,16 +22,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class KeywordUtil {
-    Configuration cfg;
-    List<String> expandWords = new ArrayList<>();
+    static Configuration cfg;
+    static List<String> expandWords = new ArrayList<>();
 
     /**
      * 每个词的最小长度
      */
     private static final int MIN_LEN = 2;
 
-    KeywordUtil() {
+    static  {
         cfg = DefaultConfig.getInstance();
         cfg.setUseSmart(true); //设置useSmart标志位 true-智能切分 false-细粒度切分
         boolean flag = loadDictionaries("keywords.dic");
@@ -40,7 +48,7 @@ public class KeywordUtil {
      * @param filenames
      * @return
      */
-    private boolean loadDictionaries(String... filenames) {
+    private static boolean loadDictionaries(String... filenames) {
         try {
             for (String filename : filenames) {
                 expandWords.addAll(IOUtils.readLines(KeywordUtil.class.getClassLoader().getResourceAsStream(filename), StandardCharsets.UTF_8));
@@ -58,7 +66,7 @@ public class KeywordUtil {
      * @param text 待提取的文本
      * @return 提取出的词
      */
-    public List<String> extract(String text) {
+    public static List<String> extract(String text) {
         StringReader reader = new StringReader(text);
         IKSegmenter ikSegmenter = new IKSegmenter(reader, cfg);
         Lexeme lex;
@@ -85,7 +93,7 @@ public class KeywordUtil {
      * @param num 需要提取的词个数
      * @return
      */
-    public List<String> getKeywords(String text, Integer num) {
+    public static List<String> getKeywords(String text, Integer num) {
         List<String> words = extract(text);
         List<String> result = new ArrayList<>();
         int count = 0;
@@ -101,26 +109,107 @@ public class KeywordUtil {
     }
 
 
+    public static void readExcel(String pathSource, String sourceName, List<Integer> colIndex) {
+        try {
+			/*// 如果需要通过URL获取资源的加上以下的代码，不需要的省略就行
+			URL url = new URL(strURL);
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			// 设置超时间为3秒
+			conn.setConnectTimeout(3*1000);
+			// 防止屏蔽程序抓取而返回403错误
+			conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+			// 获取输入流
+			InputStream inputStream = conn.getInputStream();
+			Workbook workbook  = Workbook.getWorkbook(inputStream);
+			......*/
+
+            // 解析路径的file文件
+            Workbook workbook = Workbook.getWorkbook(new File(pathSource+sourceName));
+            // 获取第一张工作表
+            Sheet sheet = workbook.getSheet(0);
+            // 循环获取每一行数据 因为默认第一行为标题行，我们可以从 1 开始循环，如果需要读取标题行，从 0 开始
+
+            List<Cell[]> cells = new ArrayList<>();
+            cells.add(sheet.getRow(0));
+            // sheet.getRows() 获取总行数
+            for (int i = 1; i < sheet.getRows(); i++) {
+                // 获取第一列的第 i 行信息 sheet.getCell(列，行)，下标从0开始
+//                String id = sheet.getCell(0, i).getContents();
+                Cell[] row = sheet.getRow(i);
+                StringBuilder contents = new StringBuilder();
+                for (Integer index : colIndex) {
+                    contents.append(row[index].getContents()).append("||||");
+                }
+                List<String> keywords = getKeywords(String.valueOf(contents), 20);
+                if (keywords.size() > 0){
+                    log.info("当前匹配到的数据是:{},匹配到的关键词是{},匹配到行是{}",contents,keywords,i);
+                    cells.add(row);
+                }
+            }
+
+            createSheet(pathSource,"res_"+sourceName,cells);
+        } catch (IOException | BiffException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void createSheet(String path,String name,List<Cell[]> cells) throws IOException, WriteException {
+        //创建关联磁盘文件
+        File excel = new File(path +name);
+        //创建一个excel
+        WritableWorkbook workbook = Workbook.createWorkbook(excel);
+        WritableSheet sheet = workbook.createSheet("result", 0);
+        log.info("当前的数据获取大小为:{}",cells.size()-1);
+        Label label =null ;
+        for (int i = 0; i < cells.size(); i++) {
+            for (int j = 0; j < cells.get(i).length; j++) {
+                label=new Label(j,i,cells.get(i)[j].getContents());
+                sheet.addCell(label);
+            }
+        }
+        log.info("开始写数据");
+        //写入数据
+        workbook.write();
+        workbook.close();
+
+    }
+
+
 
     public static void main(String[] args) throws IOException {
 //        String text = "新一代移动通信基站设备 qe131数字程控交换机";
 
+        List<Integer> colIndex = new ArrayList<>();
+        colIndex.add(23);
+        colIndex.add(24);
+        colIndex.add(25);
 
-        CsvReader newCsvReader = new CsvReader("/Users/yann/IdeaProjects/java_internal_skill_training/java_base_skilling/src/main/resources/1024.txt",'\t', Charset.forName("UTF-8"));
-        //读取表头
-        newCsvReader.readHeaders();
+        readExcel("/Users/yann/IdeaProjects/java_internal_skill_training/java_base_skilling/src/main/resources/","2014.xls",colIndex);
 
-        //读取到的行数内容存入到集合中
-        ArrayList<String> newCsvReaderList = new ArrayList<>();
-
-        //讲数据存储到集合中
-        while (newCsvReader.readRecord()) {
-            //读取一整行
-            newCsvReaderList.add(newCsvReader.getRawRecord());
-            KeywordUtil keywordUtil = new KeywordUtil();
-            List<String> keywords = keywordUtil.getKeywords(newCsvReader.getRawRecord(), 1);
-            keywords.forEach(System.out::println);
-        }
+//        CsvReader newCsvReader = new CsvReader("/Users/yann/IdeaProjects/java_internal_skill_training/java_base_skilling/src/main/resources/1024.txt",'\t', Charset.forName("UTF-8"));
+//        //读取表头
+//        newCsvReader.readHeaders();
+//
+//        //读取到的行数内容存入到集合中
+//        ArrayList<String> newCsvReaderList = new ArrayList<>();
+//
+//        //讲数据存储到集合中
+//        while (newCsvReader.readRecord()) {
+//            //读取一整行
+//            newCsvReaderList.add(newCsvReader.getRawRecord());
+//        }
+//
+//
+//
+//        for (int i = 0; i < newCsvReaderList.size(); i++) {
+//            KeywordUtil keywordUtil = new KeywordUtil();
+//            List<String> keywords = keywordUtil.getKeywords(newCsvReaderList.get(i), 20);
+//            if (keywords.size() > 0){
+//                System.out.println(i+1+":"+newCsvReaderList.get(i)+" "+keywords);
+//            }
+//        }
 
 
 
